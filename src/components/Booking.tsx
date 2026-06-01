@@ -131,6 +131,7 @@ Mohon konfirmasi slot waktunya. Terima kasih!`;
                     onChange={handleInputChange}
                     className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors appearance-none"
                   >
+                    <option className="bg-secondary">None</option>
                     <option className="bg-secondary">Shaving</option>
                     <option className="bg-secondary">Head Massage & Wash</option>
                     <option className="bg-secondary">Creambath</option>

@@ -8,6 +8,10 @@ const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat
 export const metadata: Metadata = {
   title: "Daddy's Cut Barber & Coffee | Professional Grooming in Cimahi",
   description: "Barber & Coffee Shop profesional di Cimahi. Layanan potong rambut modern dan kopi premium. Booking sekarang!",
+  icons: {
+    icon: "/img/logo2.png",
+    apple: "/img/logo.png",
+  },
 };
 
 export default function RootLayout({
