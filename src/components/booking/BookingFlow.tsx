@@ -77,6 +77,21 @@ export default function BookingFlow() {
   const [selectedGrooming, setSelectedGrooming] = useState<string | null>(null);
   const [selectedTreatments, setSelectedTreatments] = useState<string[]>([]);
   const [selectedCoffee, setSelectedCoffee] = useState<string[]>([]);
+  const [bookedSlots, setBookedSlots] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchBookedSlots = async () => {
+      try {
+        const res = await fetch(`/api/admin/schedules?barberId=barber1&date=${new Date().toISOString().split('T')[0]}`);
+        const data = await res.json();
+        const booked = data.filter((s: any) => s.status === "booked").map((s: any) => s.startTime);
+        setBookedSlots(booked);
+      } catch (err) {
+        console.error("Error fetching slots:", err);
+      }
+    };
+    fetchBookedSlots();
+  }, [currentStep]);
 
   useEffect(() => {
     // Load Midtrans Snap script
@@ -482,21 +497,28 @@ export default function BookingFlow() {
                 <div className="space-y-4">
                   <p className="text-white/70 font-medium">Pilih Jam (Hari Ini)</p>
                   <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
-                    {["09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00", "19:00", "20:00"].map((time) => (
-                      <button
-                        key={time}
-                        onClick={() => {
-                          setFormData({ ...bookingData, time });
-                          nextStep();
-                        }}
-                        className={cn(
-                          "py-3 rounded-lg border font-bold text-sm transition-all",
-                          bookingData.time === time ? "bg-primary text-black border-primary" : "bg-white/5 text-white/60 border-white/10 hover:border-primary/50"
-                        )}
-                      >
-                        {time}
-                      </button>
-                    ))}
+                    {["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "19:00", "19:30", "20:00", "20:30"].map((time) => {
+                      const isBooked = bookedSlots.includes(time);
+                      return (
+                        <button
+                          key={time}
+                          disabled={isBooked}
+                          onClick={() => {
+                            setFormData({ ...bookingData, time });
+                            nextStep();
+                          }}
+                          className={cn(
+                            "py-3 rounded-lg border font-bold text-sm transition-all",
+                            bookingData.time === time ? "bg-primary text-black border-primary" : 
+                            isBooked ? "bg-red-400/10 text-red-400/40 border-red-400/10 cursor-not-allowed" :
+                            "bg-white/5 text-white/60 border-white/10 hover:border-primary/50"
+                          )}
+                        >
+                          {time}
+                          {isBooked && <span className="block text-[8px] mt-1">Full</span>}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
               </motion.div>

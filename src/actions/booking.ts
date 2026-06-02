@@ -57,6 +57,20 @@ export async function saveBookingToDb(data: {
       throw new Error("Layanan, cabang, atau barber tidak ditemukan");
     }
 
+    // Cek apakah jadwal sudah ada dan statusnya 'booked'
+    const existingSchedule = await prisma.schedule.findFirst({
+      where: {
+        barberId: barber.id,
+        date: new Date(data.appointmentDate),
+        startTime: data.appointmentTime,
+        status: "booked"
+      }
+    });
+
+    if (existingSchedule) {
+      throw new Error("Jadwal pada jam tersebut sudah di-booking");
+    }
+
     const booking = await prisma.booking.create({
       data: {
         customerName: data.customerName,

@@ -18,6 +18,22 @@ export async function PATCH(
       },
     });
 
+    // Sinkronisasi status jadwal jika booking dikonfirmasi atau dibatalkan
+    if (status === "confirmed") {
+      await prisma.schedule.updateMany({
+        where: { bookingId: id },
+        data: { status: "booked" },
+      });
+    } else if (status === "cancelled") {
+      await prisma.schedule.updateMany({
+        where: { bookingId: id },
+        data: { status: "available" },
+      });
+    } else if (status === "completed") {
+      // Jika selesai, jadwal bisa tetap 'booked' atau 'available' tergantung kebijakan bisnis
+      // Di sini kita biarkan 'booked' sebagai riwayat
+    }
+
     // If payment status is updated to paid, update the related payment record too
     if (paymentStatus === "paid") {
       await prisma.payment.updateMany({
