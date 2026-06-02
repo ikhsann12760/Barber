@@ -135,11 +135,11 @@ app.post('/webhook/whatsapp', async (req, res) => {
     try {
         let conv = await prisma.conversation.findUnique({ where: { waNumber: from } });
         if (!conv) {
-            conv = await prisma.conversation.create({ data: { waNumber: from, history: "[]" } });
+            conv = await prisma.conversation.create({ data: { waNumber: from, history: [] } });
         }
 
         if (type === 'text') {
-            const history = Array.isArray(conv.history) ? conv.history : JSON.parse(conv.history || '[]');
+            const history = Array.isArray(conv.history) ? conv.history : [];
             
             // LLM Integration
             const llmRes = await axios.post(process.env.LLM_ENDPOINT || 'https://api.openai.com/v1/chat/completions', {
@@ -173,7 +173,7 @@ app.post('/webhook/whatsapp', async (req, res) => {
             const updatedHistory = [...history, { role: "user", content: text }, { role: "assistant", content: replyText }];
             await prisma.conversation.update({
                 where: { waNumber: from },
-                data: { history: JSON.stringify(updatedHistory.slice(-20)) } // Stringify for SQLite compatibility
+                data: { history: updatedHistory.slice(-20) } // Direct object for PostgreSQL Json
             });
 
         } 
@@ -191,7 +191,7 @@ app.post('/webhook/whatsapp', async (req, res) => {
             });
 
             // Try to extract price from history (very simple logic, can be improved)
-            const history = Array.isArray(conv.history) ? conv.history : JSON.parse(conv.history || '[]');
+            const history = Array.isArray(conv.history) ? conv.history : [];
             let lastPrice = 0;
             // Simplified: look for numbers in the last assistant message
             const lastAssistantMsg = [...history].reverse().find(m => m.role === 'assistant');

@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -43,7 +43,7 @@ model Barber {
 model Service {
   id              String    @id @default(cuid())
   name            String
-  price           Float
+  price           Decimal
   durationMinutes Int       @default(30)
   description     String?
   branchId        String
@@ -94,7 +94,7 @@ model Payment {
   id              String      @id @default(cuid())
   bookingId       String      @unique
   booking         Booking     @relation(fields: [bookingId], references: [id])
-  amount          Float
+  amount          Decimal
   paymentMethod   String? // online, cash
   paymentGateway  String? // Midtrans, Xendit
   transactionId   String?     @unique
@@ -110,7 +110,7 @@ model Conversation {
   id        String   @id @default(cuid())
   waNumber  String   @unique
   state     String   @default("idle") // idle, ordering, waiting_for_payment, completed
-  history   String   @default("[]") // SQLite doesn't support Json type natively in older versions, using String
+  history   Json     @default("[]")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -118,7 +118,7 @@ model Conversation {
 model BotOrder {
   id             String   @id @default(cuid())
   waNumber       String
-  totalPrice     Float
+  totalPrice     Decimal
   receiptUrl     String?
   status         String   @default("pending") // pending, approved, rejected
   rejectionReason String?
