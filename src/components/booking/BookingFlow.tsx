@@ -45,8 +45,8 @@ const branches = [
 const groomingServices = [
   { id: "g1", name: "Gentleman's Hair Cuts", price: 50000, duration: "45 min" },
   { id: "g2", name: "Full Service Cuts", price: 55000, duration: "60 min" },
-  { id: "g3", name: "Baby Hair Cuts", price: 55000, duration: "30 min" },
-  { id: "g4", name: "Kids Haircut", price: 50000, duration: "45 min" },
+  { id: "g3", name: "Baby Hair Cuts", price: 55000, duration: "30 min", image: "/img/img7.jpg" },
+  { id: "g4", name: "Kids Haircut", price: 50000, duration: "45 min", image: "/img/img8.jpg" },
   { id: "g5", name: "Package (Dad & Kids)", price: 100000, duration: "90 min" },
 ];
 
@@ -353,9 +353,20 @@ export default function BookingFlow() {
                               selectedGrooming === service.id ? "border-primary bg-primary/10" : "border-white/5 bg-black/40 hover:bg-white/5"
                             )}
                           >
-                            <div>
-                              <h5 className="text-white font-bold">{service.name}</h5>
-                              <p className="text-white/40 text-xs">{service.duration}</p>
+                            <div className="flex items-center gap-4">
+                              {(service as any).image && (
+                                <div className="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 border border-white/10">
+                                  <img 
+                                    src={(service as any).image} 
+                                    alt={service.name}
+                                    className="w-full h-full object-cover"
+                                  />
+                                </div>
+                              )}
+                              <div>
+                                <h5 className="text-white font-bold">{service.name}</h5>
+                                <p className="text-white/40 text-xs">{service.duration}</p>
+                              </div>
                             </div>
                             <div className="flex items-center gap-3">
                               <span className="text-white font-black text-sm">Rp {service.price.toLocaleString('id-ID')}</span>
