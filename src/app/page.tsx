@@ -8,6 +8,7 @@ import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
+// Main page component
 export default function Home() {
   return (
     <main className="min-h-screen bg-black">
