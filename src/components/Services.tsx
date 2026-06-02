@@ -20,13 +20,13 @@ const Services = () => {
       name: "Baby Hair Cuts",
       price: "Rp 55.000",
       desc: "Baby Hair Cuts.",
-      image: "/img/img7.jpg"
+      image: "/img/Image7.png"
     },
     {
       name: "Kids Haircut",
       price: "Rp 50.000",
       desc: "Kids Haircut, Warm Water Hair Wash, Styling.",
-      image: "/img/img8.jpg"
+      image: "/img/img8.png"
     },
     {
       name: "Package(Dad And Kids Hair Cuts)",
