@@ -373,7 +373,7 @@ export default function BookingFlow() {
                                 <div className="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 border border-white/10">
                                   <img 
                                     src={(service as any).image} 
-                                    alt={service.name}
+                                    alt={`Layanan ${service.name} di Daddy'scut Barber`}
                                     className="w-full h-full object-cover"
                                   />
                                 </div>

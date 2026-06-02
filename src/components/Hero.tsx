@@ -22,7 +22,7 @@ const Hero = () => {
         >
           <h2 className="text-primary font-bold tracking-[0.2em] uppercase mb-4">The Premium Barber & Coffee Experience in Cimahi</h2>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-6 tracking-tighter">
-            DADDY'S <span className="text-primary">CUT</span>
+            Booking Jadwal Potong Rambut di <span className="text-primary">Daddy'scut Barber</span>
           </h1>
           <p className="text-xl md:text-2xl text-white/80 max-w-2xl mx-auto mb-10 font-light">
             Grooming Maksimal, Kopi Berkualitas. Nikmati Pengalaman Cukur yang Tak Terlupakan dengan Sentuhan Barista.

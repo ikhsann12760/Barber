@@ -65,7 +65,7 @@ const About = () => {
             <div className="aspect-[4/5] rounded-2xl overflow-hidden border-2 border-primary/20">
               <img 
                 src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=2074&auto=format&fit=crop" 
-                alt="Daddy's Cut Barber Interior"
+                alt="Suasana interior barbershop modern Daddy'scut Barber & Coffee"
                 className="w-full h-full object-cover"
               />
             </div>

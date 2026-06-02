@@ -8,8 +8,8 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat" });
 
 export const metadata: Metadata = {
-  title: "Daddy's Cut Barber & Coffee | Professional Grooming in Cimahi",
-  description: "Barber & Coffee Shop profesional di Cimahi. Layanan potong rambut modern dan kopi premium. Booking sekarang!",
+  title: "Daddy'scut Barber | Barbershop Modern & Booking Online Terbaik",
+  description: "Nikmati pengalaman potong rambut pria terbaik dengan kapster profesional. Jauh-jauh dari antrean, booking jadwal potong rambutmu secara online di Daddy'scut Barber sekarang!",
   icons: {
     icon: "/img/logo2.png",
     apple: "/img/logo.png",

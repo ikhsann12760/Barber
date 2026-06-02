@@ -63,7 +63,7 @@ const Services = () => {
               <div className="aspect-video overflow-hidden">
                 <img 
                   src={service.image} 
-                  alt={service.name}
+                  alt={`${service.name} - Layanan cukur pria di Daddy'scut Barber`}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
               </div>

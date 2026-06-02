@@ -84,7 +84,7 @@ const Gallery = () => {
               ) : (
                 <img 
                   src={item.url} 
-                  alt={`Barber Work ${index + 1}`}
+                  alt={`${item.title} - Gaya rambut terbaik dari Daddy'scut Barber`}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
               )}

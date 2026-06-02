@@ -37,7 +37,7 @@ const Navbar = () => {
           <Link href="/" className="text-2xl font-bold tracking-tighter flex items-center gap-3">
             <img 
               src="/img/logo.png" 
-              alt="Daddy's Cut Logo" 
+              alt="Logo Resmi Daddy'scut Barber & Coffee" 
               className="w-12 h-12 object-cover rounded-full border border-primary/20"
             />
             <div className="flex flex-col sm:flex-row sm:items-center">

@@ -9,7 +9,7 @@ const Footer = () => {
             <Link href="/" className="text-2xl font-bold tracking-tighter flex items-center gap-3">
               <img 
                 src="/img/logo.png" 
-                alt="Daddy's Cut Logo" 
+                alt="Logo Daddy'scut Barber" 
                 className="w-10 h-10 object-cover rounded-full border border-primary/20"
               />
               <div>
