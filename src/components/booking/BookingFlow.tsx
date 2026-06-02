@@ -45,8 +45,8 @@ const branches = [
 const groomingServices = [
   { id: "g1", name: "Gentleman's Hair Cuts", price: 50000, duration: "45 min", image: "/img/img1.jpg" },
   { id: "g2", name: "Full Service Cuts", price: 55000, duration: "60 min", image: "/img/img2.jpg" },
-  { id: "g3", name: "Baby Hair Cuts", price: 55000, duration: "30 min", image: "/img/img7.jpg" },
-  { id: "g4", name: "Kids Haircut", price: 50000, duration: "45 min", image: "/img/img8.jpg" },
+  { id: "g3", name: "Baby Hair Cuts", price: 55000, duration: "30 min", image: "/img/Image7.png" },
+  { id: "g4", name: "Kids Haircut", price: 50000, duration: "45 min", image: "/img/img8.png" },
   { id: "g5", name: "Package (Dad & Kids)", price: 100000, duration: "90 min", image: "/img/img3.jpg" },
 ];
 
