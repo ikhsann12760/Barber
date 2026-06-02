@@ -110,8 +110,7 @@ const Contact = () => {
               <div className="flex gap-4">
                 {[
                   { Icon: InstagramIcon, href: "https://www.instagram.com/daddyscut.barberncoffee/" },
-                  { Icon: FacebookIcon, href: "#" },
-                  { Icon: YoutubeIcon, href: "#" }
+                  { Icon: FacebookIcon, href: "https://web.facebook.com/profile.php?id=100082998777219" }
                 ].map((item, i) => (
                   <a 
                     key={i}

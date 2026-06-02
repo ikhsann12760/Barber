@@ -1,0 +1,149 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Branch {
+  id           String        @id @default(cuid())
+  name         String
+  address      String
+  phone        String
+  latitude     Float?
+  longitude    Float?
+  openTime     String        @default("09:00")
+  closeTime    String        @default("21:00")
+  workingDays  String        @default("Mon,Tue,Wed,Thu,Fri,Sat,Sun")
+  barbers      Barber[]
+  services     Service[]
+  bookings     Booking[]
+  bankAccounts BankAccount[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Barber {
+  id             String     @id @default(cuid())
+  name           String
+  specialization String
+  photo          String?
+  rating         Float      @default(5.0)
+  status         String     @default("active") // active, inactive
+  branchId       String
+  branch         Branch     @relation(fields: [branchId], references: [id])
+  schedules      Schedule[]
+  bookings       Booking[]
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+model Service {
+  id              String    @id @default(cuid())
+  name            String
+  price           Float
+  durationMinutes Int       @default(30)
+  description     String?
+  branchId        String
+  branch          Branch    @relation(fields: [branchId], references: [id])
+  bookings        Booking[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Schedule {
+  id        String   @id @default(cuid())
+  barberId  String
+  barber    Barber   @relation(fields: [barberId], references: [id])
+  date      DateTime
+  startTime String   @default("09:00")
+  endTime   String   @default("09:30")
+  status    String   @default("available") // available, booked, break
+  bookingId String?  @unique
+  booking   Booking? @relation("BookingToSchedule")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Booking {
+  id              String   @id @default(cuid())
+  customerName    String
+  customerPhone   String
+  customerEmail   String
+  serviceId       String
+  service         Service  @relation(fields: [serviceId], references: [id])
+  branchId        String
+  branch          Branch   @relation(fields: [branchId], references: [id])
+  barberId        String
+  barber          Barber   @relation(fields: [barberId], references: [id])
+  appointmentDate DateTime
+  appointmentTime String
+  notes           String?
+  status          String   @default("pending") // pending, confirmed, completed, cancelled
+  paymentStatus   String   @default("unpaid") // unpaid, pending, paid, failed
+  payment         Payment?
+  schedule        Schedule @relation("BookingToSchedule", fields: [scheduleId], references: [id])
+  scheduleId      String   @unique
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Payment {
+  id              String      @id @default(cuid())
+  bookingId       String      @unique
+  booking         Booking     @relation(fields: [bookingId], references: [id])
+  amount          Float
+  paymentMethod   String? // online, cash
+  paymentGateway  String? // Midtrans, Xendit
+  transactionId   String?     @unique
+  status          String      @default("pending") // pending, success, failed
+  bankAccountId   String?
+  bankAccount     BankAccount? @relation(fields: [bankAccountId], references: [id])
+  transferredAt   DateTime?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model Conversation {
+  id        String   @id @default(cuid())
+  waNumber  String   @unique
+  state     String   @default("idle") // idle, ordering, waiting_for_payment, completed
+  history   String   @default("[]") // SQLite doesn't support Json type natively in older versions, using String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BotOrder {
+  id             String   @id @default(cuid())
+  waNumber       String
+  totalPrice     Float
+  receiptUrl     String?
+  status         String   @default("pending") // pending, approved, rejected
+  rejectionReason String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model BankAccount {
+  id        String    @id @default(cuid())
+  bankName  String
+  accountNo String
+  holder    String
+  branchId  String
+  branch    Branch    @relation(fields: [branchId], references: [id])
+  payments  Payment[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  password      String?
+  role          String    @default("admin") // admin, super_admin
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
