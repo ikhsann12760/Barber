@@ -1,14 +1,16 @@
 "use client";
-
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react"; // <-- TAMBAHKAN INI
 import { 
   TrendingUp, 
   Users, 
   CalendarCheck, 
   Wallet,
-  Loader2
+  Loader2,
+  Building2 // <-- TAMBAHKAN INI
 } from "lucide-react";
 import Link from "next/link";
+import { useSelectedLayoutSegment } from "next/navigation";
 
 const iconMap: Record<string, any> = {
   Wallet,
@@ -18,6 +20,7 @@ const iconMap: Record<string, any> = {
 };
 
 export default function AdminDashboardPage() {
+  const {data: session} = useSession();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -46,6 +49,22 @@ export default function AdminDashboardPage() {
 
   return (
     <div className="space-y-8">
+     {/* Masukkan mulai baris 53 */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-secondary-light/30 border border-white/5 p-6 rounded-2xl">
+        <div>
+          <h2 className="text-xl font-black">Selamat Datang, {session?.user?.name || "Admin"}!</h2>
+          <p className="text-sm text-white/50">Berikut ringkasan statistik barbershop Anda hari ini.</p>
+        </div>
+        <div className="flex items-center gap-3 bg-black/40 border border-white/10 px-4 py-2 rounded-xl">
+          <Building2 className="text-primary" size={20} />
+          <div className="text-left">
+            <p className="text-[10px] text-white/40 uppercase font-bold tracking-wider">Lokasi Cabang</p>
+            <p className="text-sm font-bold text-white">
+              {(session?.user as any)?.branch?.name || "Semua Cabang (Pusat)"}
+            </p>
+          </div>
+        </div>
+      </div> 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {data?.stats.map((stat: any) => {
