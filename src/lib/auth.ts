@@ -2,7 +2,7 @@ import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -72,6 +72,7 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login",
     error: "/login", // Redirect ke login jika terjadi error auth
   },
-  debug: process.env.NODE_ENV === "development",
+  //debug: process.env.NODE_ENV === "development",
+  debug: true,
   secret: process.env.NEXTAUTH_SECRET,
 };
