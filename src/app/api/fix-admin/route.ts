@@ -2,30 +2,38 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 
-export async function GET() {
+export async function POST(request: Request) {
   try {
-    // Generate hash password menggunakan library yang terinstall di project
-    const securePassword = await bcrypt.hash("Admin123!", 10);
+    const body = await request.json();
+    const { email, password, name, role, branchId } = body;
 
-    // Update atau buat baru jika user admin belum ada
-    const updatedUser = await prisma.user.upsert({
-      where: { email: "admin@daddyscut.com" },
+    if (!email || !password) {
+      return NextResponse.json({ success: false, message: "Email dan password wajib diisi!" }, { status: 400 });
+    }
+
+    const securePassword = await bcrypt.hash(password, 10);
+
+    const user = await prisma.user.upsert({
+      where: { email: email },
       update: {
+        name: name || undefined,
         password: securePassword,
-        role: "super_admin"
+        role: role || undefined,
+        branchId: branchId || null
       },
       create: {
-        name: "admin",
-        email: "admin@daddyscut.com",
+        name: name || email.split('@')[0],
+        email: email,
         password: securePassword,
-        role: "super_admin"
+        role: role || "admin_cabang",
+        branchId: branchId || null
       }
     });
 
-    return NextResponse.json({ 
-      success: true, 
-      message: "Password admin berhasil diperbarui menggunakan bcryptjs!",
-      user: { email: updatedUser.email, role: updatedUser.role }
+    return NextResponse.json({
+      success: true,
+      message: `User ${user.email} berhasil ditambahkan/diperbarui!`,
+      user: { email: user.email, name: user.name, role: user.role }
     });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });

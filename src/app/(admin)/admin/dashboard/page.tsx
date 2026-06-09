@@ -20,7 +20,8 @@ const iconMap: Record<string, any> = {
 };
 
 export default function AdminDashboardPage() {
-  const {data: session} = useSession();
+  // 1. Ambil status loading bawaan dari next-auth
+  const { data: session, status } = useSession(); 
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -39,7 +40,8 @@ export default function AdminDashboardPage() {
     fetchStats();
   }, []);
 
-  if (loading) {
+  // 2. Jika sesi NextAuth masih dicek ATAU data stats masih loading, tampilkan loading spinner
+  if (status === "loading" || loading) {
     return (
       <div className="flex items-center justify-center h-64">
         <Loader2 className="animate-spin text-primary" size={40} />
@@ -47,6 +49,10 @@ export default function AdminDashboardPage() {
     );
   }
 
+  // Ambil nama cabang dengan aman tanpa memicu crash jika properti null
+  const branchName = session?.user && "branch" in session.user && (session.user as any).branch?.name 
+    ? (session.user as any).branch.name 
+    : "Semua Cabang (Pusat)";
   return (
     <div className="space-y-8">
      {/* Masukkan mulai baris 53 */}

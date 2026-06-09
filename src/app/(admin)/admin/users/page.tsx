@@ -34,6 +34,7 @@ export default function UsersPage() {
   const [branches, setBranches] = useState<Branch[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   const [formData, setFormData] = useState({
@@ -43,6 +44,30 @@ export default function UsersPage() {
     role: "admin_cabang",
     branchId: ""
   });
+
+  const openEditModal = (user: User) => {
+    setEditingUser(user);
+    setFormData({
+      name: user.name || "",
+      email: user.email || "",
+      password: "", // Kosongkan password saat edit
+      role: user.role,
+      branchId: user.branchId || ""
+    });
+    setShowAddModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowAddModal(false);
+    setEditingUser(null);
+    setFormData({
+      name: "",
+      email: "",
+      password: "",
+      role: "admin_cabang",
+      branchId: branches[0]?.id || ""
+    });
+  };
 
   const fetchUsers = async () => {
     try {
@@ -89,8 +114,11 @@ export default function UsersPage() {
 
     setIsSubmitting(true);
     try {
-      const res = await fetch("/api/admin/users", {
-        method: "POST",
+      const url = editingUser ? `/api/admin/users/${editingUser.id}` : "/api/admin/users";
+      const method = editingUser ? "PATCH" : "POST";
+      
+      const res = await fetch(url, {
+        method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
@@ -98,21 +126,14 @@ export default function UsersPage() {
       const data = await res.json();
 
       if (res.ok) {
-        setShowAddModal(false);
-        setFormData({
-          name: "",
-          email: "",
-          password: "",
-          role: "admin_cabang",
-          branchId: branches[0]?.id || ""
-        });
+        handleCloseModal();
         fetchUsers();
       } else {
-        alert(data.error || "Failed to create user");
+        alert(data.error || `Failed to ${editingUser ? 'update' : 'create'} user`);
       }
     } catch (err) {
-      console.error("Error creating user:", err);
-      alert("Terjadi kesalahan saat membuat user");
+      console.error(`Error ${editingUser ? 'updating' : 'creating'} user:`, err);
+      alert(`Terjadi kesalahan saat ${editingUser ? 'memperbarui' : 'membuat'} user`);
     } finally {
       setIsSubmitting(false);
     }
@@ -124,11 +145,15 @@ export default function UsersPage() {
       const res = await fetch(`/api/admin/users/${id}`, {
         method: "DELETE",
       });
+      const data = await res.json();
       if (res.ok) {
         fetchUsers();
+      } else {
+        alert(data.error || "Failed to delete user");
       }
     } catch (err) {
       console.error("Error deleting user:", err);
+      alert("Terjadi kesalahan saat menghapus user");
     }
   };
 
@@ -205,12 +230,22 @@ export default function UsersPage() {
                       {new Date(user.createdAt).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4 text-center">
-                      <button 
-                        onClick={() => deleteUser(user.id)}
-                        className="p-2 hover:bg-red-400/10 text-red-400 rounded-lg transition-all"
-                      >
-                        <Trash2 size={18} />
-                      </button>
+                      <div className="flex items-center justify-center gap-2">
+                        <button 
+                          onClick={() => openEditModal(user)}
+                          className="p-2 hover:bg-primary/10 text-primary rounded-lg transition-all"
+                          title="Edit User"
+                        >
+                          <RefreshCcw size={18} />
+                        </button>
+                        <button 
+                          onClick={() => deleteUser(user.id)}
+                          className="p-2 hover:bg-red-400/10 text-red-400 rounded-lg transition-all"
+                          title="Delete User"
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))
@@ -220,13 +255,13 @@ export default function UsersPage() {
         </div>
       </div>
 
-      {/* Add User Modal */}
+      {/* Add/Edit User Modal */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
           <div className="bg-secondary-light border border-white/10 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200">
             <div className="p-6 border-b border-white/5 flex justify-between items-center">
-              <h3 className="text-xl font-black">Add New User</h3>
-              <button onClick={() => setShowAddModal(false)} className="text-white/40 hover:text-white">
+              <h3 className="text-xl font-black">{editingUser ? "Edit User Account" : "Add New User"}</h3>
+              <button onClick={handleCloseModal} className="text-white/40 hover:text-white">
                 <X size={24} />
               </button>
             </div>
@@ -257,14 +292,16 @@ export default function UsersPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-white/40 uppercase tracking-widest mb-2">Password</label>
+                <label className="block text-xs font-bold text-white/40 uppercase tracking-widest mb-2">
+                  {editingUser ? "New Password (leave blank to keep current)" : "Password"}
+                </label>
                 <input 
                   type="password" 
-                  required
+                  required={!editingUser}
                   value={formData.password}
                   onChange={e => setFormData({...formData, password: e.target.value})}
                   className="w-full bg-black/40 border border-white/5 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary transition-all"
-                  placeholder="••••••••"
+                  placeholder={editingUser ? "••••••••" : "Min. 6 characters"}
                 />
               </div>
 
@@ -311,7 +348,7 @@ export default function UsersPage() {
                 disabled={isSubmitting}
                 className="w-full bg-primary text-black font-black py-4 rounded-xl mt-4 hover:bg-primary-dark transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
-                {isSubmitting ? <Loader2 className="animate-spin" size={20} /> : "Create User Account"}
+                {isSubmitting ? <Loader2 className="animate-spin" size={20} /> : editingUser ? "Update User Account" : "Create User Account"}
               </button>
             </form>
           </div>
