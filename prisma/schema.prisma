@@ -17,12 +17,13 @@ model Branch {
   openTime     String        @default("09:00")
   closeTime    String        @default("21:00")
   workingDays  String        @default("Mon,Tue,Wed,Thu,Fri,Sat,Sun")
-  barbers      Barber[]
-  services     Service[]
-  bookings     Booking[]
-  bankAccounts BankAccount[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
+  bankAccounts BankAccount[]
+  barbers      Barber[]
+  bookings     Booking[]
+  services     Service[]
+  users        User[]
 }
 
 model Barber {
@@ -31,13 +32,13 @@ model Barber {
   specialization String
   photo          String?
   rating         Float      @default(5.0)
-  status         String     @default("active") // active, inactive
+  status         String     @default("active")
   branchId       String
-  branch         Branch     @relation(fields: [branchId], references: [id])
-  schedules      Schedule[]
-  bookings       Booking[]
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
+  branch         Branch     @relation(fields: [branchId], references: [id])
+  bookings       Booking[]
+  schedules      Schedule[]
 }
 
 model Service {
@@ -47,24 +48,24 @@ model Service {
   durationMinutes Int       @default(30)
   description     String?
   branchId        String
-  branch          Branch    @relation(fields: [branchId], references: [id])
-  bookings        Booking[]
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+  bookings        Booking[]
+  branch          Branch    @relation(fields: [branchId], references: [id])
 }
 
 model Schedule {
   id        String   @id @default(cuid())
   barberId  String
-  barber    Barber   @relation(fields: [barberId], references: [id])
   date      DateTime
   startTime String   @default("09:00")
   endTime   String   @default("09:30")
-  status    String   @default("available") // available, booked, break
+  status    String   @default("available") // available, pending, booked, break
   bookingId String?  @unique
-  booking   Booking? @relation("BookingToSchedule")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  booking   Booking? @relation("BookingToSchedule")
+  barber    Barber   @relation(fields: [barberId], references: [id])
 }
 
 model Booking {
@@ -73,57 +74,58 @@ model Booking {
   customerPhone   String
   customerEmail   String
   serviceId       String
-  service         Service  @relation(fields: [serviceId], references: [id])
   branchId        String
-  branch          Branch   @relation(fields: [branchId], references: [id])
+  branchName      String?
   barberId        String
-  barber          Barber   @relation(fields: [barberId], references: [id])
   appointmentDate DateTime
   appointmentTime String
   notes           String?
-  status          String   @default("pending") // pending, confirmed, completed, cancelled
-  paymentStatus   String   @default("unpaid") // unpaid, pending, paid, failed
-  payment         Payment?
-  schedule        Schedule @relation("BookingToSchedule", fields: [scheduleId], references: [id])
+  status          String   @default("pending")
+  paymentStatus   String   @default("unpaid")
   scheduleId      String   @unique
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+  schedule        Schedule @relation("BookingToSchedule", fields: [scheduleId], references: [id])
+  barber          Barber   @relation(fields: [barberId], references: [id])
+  branch          Branch   @relation(fields: [branchId], references: [id])
+  service         Service  @relation(fields: [serviceId], references: [id])
+  payment         Payment?
 }
 
 model Payment {
-  id              String      @id @default(cuid())
-  bookingId       String      @unique
-  booking         Booking     @relation(fields: [bookingId], references: [id])
+  id             String       @id @default(cuid())
+  bookingId      String       @unique
   amount          Decimal
-  paymentMethod   String? // online, cash
-  paymentGateway  String? // Midtrans, Xendit
-  transactionId   String?     @unique
-  status          String      @default("pending") // pending, success, failed
-  bankAccountId   String?
-  bankAccount     BankAccount? @relation(fields: [bankAccountId], references: [id])
-  transferredAt   DateTime?
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
+  paymentMethod  String?
+  paymentGateway String?
+  transactionId  String?      @unique
+  status         String       @default("pending")
+  bankAccountId  String?
+  transferredAt  DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  bankAccount    BankAccount? @relation(fields: [bankAccountId], references: [id])
+  booking        Booking      @relation(fields: [bookingId], references: [id])
 }
 
 model Conversation {
   id        String   @id @default(cuid())
   waNumber  String   @unique
-  state     String   @default("idle") // idle, ordering, waiting_for_payment, completed
+  state     String   @default("idle")
   history   Json     @default("[]")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model BotOrder {
-  id             String   @id @default(cuid())
-  waNumber       String
+  id              String   @id @default(cuid())
+  waNumber        String
   totalPrice     Decimal
-  receiptUrl     String?
-  status         String   @default("pending") // pending, approved, rejected
+  receiptUrl      String?
+  status          String   @default("pending")
   rejectionReason String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model BankAccount {
@@ -132,18 +134,20 @@ model BankAccount {
   accountNo String
   holder    String
   branchId  String
-  branch    Branch    @relation(fields: [branchId], references: [id])
-  payments  Payment[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  branch    Branch    @relation(fields: [branchId], references: [id])
+  payments  Payment[]
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  password      String?
-  role          String    @default("admin") // admin, super_admin
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id        String   @id @default(cuid())
+  name      String?
+  email     String?  @unique
+  password  String?
+  role      String   @default("admin") // super_admin, admin_cabang
+  branchId  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  branch    Branch?  @relation(fields: [branchId], references: [id])
 }

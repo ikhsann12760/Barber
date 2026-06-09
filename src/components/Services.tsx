@@ -43,41 +43,41 @@ const Services = () => {
   ];
 
   return (
-    <section id="services" className="py-24 bg-black">
+    <section id="services" className="py-16 md:py-24 bg-black">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-primary font-bold uppercase tracking-widest mb-4">Layanan Kami</h2>
-          <h3 className="text-4xl md:text-5xl font-black text-white">Menu Grooming</h3>
+        <div className="text-center mb-10 md:mb-16">
+          <h2 className="text-primary font-bold text-xs md:text-sm uppercase tracking-[0.3em] mb-3 md:mb-4">Layanan Kami</h2>
+          <h3 className="text-3xl md:text-5xl font-black text-white">Menu Grooming</h3>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {services.map((service, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="group bg-secondary-light rounded-xl overflow-hidden hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300"
+              transition={{ delay: index * 0.05 }}
+              className="group bg-secondary-light/50 rounded-2xl overflow-hidden border border-white/5 hover:border-primary/20 transition-all duration-300"
             >
-              <div className="aspect-video overflow-hidden">
+              <div className="aspect-[16/10] overflow-hidden">
                 <img 
                   src={service.image} 
                   alt={`${service.name} - Layanan cukur pria di Daddy'scut Barber`}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
               </div>
-              <div className="p-8">
-                <div className="flex justify-between items-start mb-4">
-                  <h4 className="text-white text-xl font-bold">{service.name}</h4>
-                  <span className="text-primary font-black">{service.price}</span>
+              <div className="p-5 md:p-8">
+                <div className="flex flex-col gap-1 mb-4">
+                  <h4 className="text-white text-lg md:text-xl font-bold">{service.name}</h4>
+                  <span className="text-primary font-black text-base">{service.price}</span>
                 </div>
-                <p className="text-white/60 mb-6">{service.desc}</p>
+                <p className="text-white/50 text-xs md:text-sm mb-6 leading-relaxed line-clamp-2 md:line-clamp-none">{service.desc}</p>
                 <a 
-                  href="#booking" 
-                  className="text-primary font-bold text-sm uppercase tracking-tighter hover:text-white transition-colors"
+                  href="#booking-v2" 
+                  className="inline-flex items-center gap-2 text-primary font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] hover:text-white transition-colors"
                 >
-                  Booking Sekarang &rarr;
+                  Booking Sekarang <span className="text-lg">&rarr;</span>
                 </a>
               </div>
             </motion.div>

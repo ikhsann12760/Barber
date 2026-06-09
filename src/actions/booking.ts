@@ -46,22 +46,54 @@ export async function saveBookingToDb(data: {
   amount: number;
 }) {
   try {
-    // Cari data pendukung untuk memastikan ID valid
-    const service = await prisma.service.findUnique({ where: { id: data.serviceId } });
     const branch = await prisma.branch.findUnique({ where: { id: data.branchId } });
-    const barber = data.barberId === "default" 
-      ? await prisma.barber.findFirst({ where: { branchId: data.branchId } })
-      : await prisma.barber.findUnique({ where: { id: data.barberId } });
+    
+    // Gunakan barber yang dipilih, jika "default" ambil barber pertama yang aktif di cabang tersebut
+    let barber;
+    if (data.barberId === "default") {
+      barber = await prisma.barber.findFirst({ 
+        where: { branchId: data.branchId, status: "active" } 
+      });
+    } else {
+      barber = await prisma.barber.findUnique({ where: { id: data.barberId } });
+    }
 
-    if (!service || !branch || !barber) {
-      throw new Error("Layanan, cabang, atau barber tidak ditemukan");
+    if (!branch) {
+      throw new Error("Cabang tidak ditemukan. Silakan pilih cabang yang valid.");
+    }
+
+    if (!barber) {
+      throw new Error("Tidak ada barber yang tersedia di cabang ini untuk saat ini.");
+    }
+
+    // Pastikan serviceId valid
+    const service = await prisma.service.findUnique({ where: { id: data.serviceId } });
+    if (!service) {
+      // Jika serviceId dari hardcode frontend tidak ada di DB, coba cari service pertama di cabang tersebut
+      const fallbackService = await prisma.service.findFirst({
+        where: { branchId: data.branchId }
+      });
+      
+      if (!fallbackService) {
+        throw new Error("Layanan tidak ditemukan di cabang ini.");
+      }
+      data.serviceId = fallbackService.id;
     }
 
     // Cek apakah jadwal sudah ada dan statusnya 'booked'
+    const appointmentDate = new Date(data.appointmentDate);
+    const startOfDay = new Date(appointmentDate);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(appointmentDate);
+    endOfDay.setHours(23, 59, 59, 999);
+
     const existingSchedule = await prisma.schedule.findFirst({
       where: {
         barberId: barber.id,
-        date: new Date(data.appointmentDate),
+        date: {
+          gte: startOfDay,
+          lte: endOfDay,
+        },
         startTime: data.appointmentTime,
         status: "booked"
       }
@@ -80,6 +112,7 @@ export async function saveBookingToDb(data: {
         appointmentTime: data.appointmentTime,
         status: data.status,
         paymentStatus: data.paymentStatus,
+        branchName: branch.name,
         service: { connect: { id: service.id } },
         branch: { connect: { id: branch.id } },
         barber: { connect: { id: barber.id } },
@@ -88,7 +121,7 @@ export async function saveBookingToDb(data: {
             barber: { connect: { id: barber.id } },
             date: new Date(data.appointmentDate),
             startTime: data.appointmentTime,
-            status: "booked"
+            status: "pending"
           }
         },
         payment: {
@@ -111,12 +144,21 @@ export async function saveBookingToDb(data: {
 }
 
 export async function getBranches() {
-  return await prisma.branch.findMany({
+  const branches = await prisma.branch.findMany({
     include: {
       services: true,
       barbers: true,
     },
   });
+
+  // Konversi Decimal ke Number agar bisa dilewatkan ke Client Component
+  return branches.map(branch => ({
+    ...branch,
+    services: branch.services.map(service => ({
+      ...service,
+      price: Number(service.price)
+    }))
+  }));
 }
 
 export async function getBarbersByBranch(branchId: string) {

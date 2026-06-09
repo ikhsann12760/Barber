@@ -33,22 +33,44 @@ export default function SchedulesPage() {
   // Fetch Branches
   useEffect(() => {
     const fetchBranches = async () => {
-      const res = await fetch("/api/admin/stats"); // Reuse existing stats API or similar to get branch data
-      // For simplicity, let's assume we fetch branches from a new API or existing ones
-      // Since we don't have a direct branch API yet, let's use the booking action or similar
+      try {
+        const res = await fetch("/api/admin/branches");
+        if (res.ok) {
+          const data = await res.json();
+          setBranches(data);
+          if (data.length > 0) {
+            setSelectedBranchId(data[0].id);
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching branches:", err);
+      }
     };
     
-    // Default initial data for now
-    setSelectedBranchId("cibabat");
+    fetchBranches();
   }, []);
 
   // Fetch Barbers when Branch changes
   useEffect(() => {
-    if (selectedBranchId) {
-      // In a real app, fetch from API. For now, we use the seeded data logic.
-      setBarbers([{ id: "barber1", name: "John Doe", branchId: "cibabat" }]);
-      setSelectedBarberId("barber1");
-    }
+    const fetchBarbers = async () => {
+      if (!selectedBranchId) return;
+      try {
+        const res = await fetch(`/api/admin/barbers?branchId=${selectedBranchId}`);
+        if (res.ok) {
+          const data = await res.json();
+          setBarbers(data);
+          if (data.length > 0) {
+            setSelectedBarberId(data[0].id);
+          } else {
+            setSelectedBarberId("");
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching barbers:", err);
+      }
+    };
+
+    fetchBarbers();
   }, [selectedBranchId]);
 
   // Fetch Schedules
@@ -58,9 +80,10 @@ export default function SchedulesPage() {
     try {
       const res = await fetch(`/api/admin/schedules?barberId=${selectedBarberId}&date=${selectedDate}`);
       const data = await res.json();
-      setSchedules(data);
+      setSchedules(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error(err);
+      setSchedules([]);
     } finally {
       setLoading(false);
     }
@@ -118,7 +141,9 @@ export default function SchedulesPage() {
                 onChange={(e) => setSelectedBranchId(e.target.value)}
                 className="w-full bg-black/40 border border-white/5 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary"
               >
-                <option value="cibabat">Cibabat (Pusat)</option>
+                {branches.map(branch => (
+                  <option key={branch.id} value={branch.id}>{branch.name}</option>
+                ))}
               </select>
             </div>
 
@@ -176,7 +201,7 @@ export default function SchedulesPage() {
               ) : (
                 <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
                   {timeSlots.map((time) => {
-                    const schedule = schedules.find(s => s.startTime === time);
+                    const schedule = Array.isArray(schedules) ? schedules.find(s => s.startTime === time) : null;
                     const isBooked = schedule?.status === "booked";
                     const isUpdating = updatingId === time;
                     

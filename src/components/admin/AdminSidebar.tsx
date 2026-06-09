@@ -9,22 +9,31 @@ import {
   Users, 
   Settings, 
   Scissors,
-  LogOut
+  LogOut,
+  MapPin
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 const menuItems = [
   { name: "Overview", href: "/admin/dashboard", icon: LayoutDashboard },
   { name: "Bookings", href: "/admin/bookings", icon: CalendarCheck },
-  { name: "WA Orders", href: "/admin/bot-orders", icon: Scissors },
+  { name: "Branches", href: "/admin/branches", icon: MapPin, roles: ["super_admin"] },
+  { name: "Barbers", href: "/admin/barbers", icon: Scissors, roles: ["super_admin"] },
   { name: "Schedules", href: "/admin/schedules", icon: Clock },
-  { name: "Barbers", href: "/admin/barbers", icon: Users },
-  { name: "Settings", href: "/admin/settings", icon: Settings },
+  { name: "Users", href: "/admin/users", icon: Users, roles: ["super_admin"] },
+  { name: "Settings", href: "/admin/settings", icon: Settings, roles: ["super_admin"] },
 ];
 
 export default function AdminSidebar() {
   const pathname = usePathname();
+  const { data: session } = useSession();
+  const userRole = (session?.user as any)?.role;
+
+  const filteredMenuItems = menuItems.filter(item => {
+    if (!item.roles) return true;
+    return item.roles.includes(userRole);
+  });
 
   return (
     <div className="w-64 bg-secondary-light border-r border-white/5 h-screen sticky top-0 flex flex-col">
@@ -34,10 +43,15 @@ export default function AdminSidebar() {
           <span className="text-white">DADDY'S</span>
           <span className="text-primary">CUT</span>
         </Link>
+        {userRole === "super_admin" && (
+          <span className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full mt-2 inline-block font-black uppercase tracking-widest">
+            Super Admin
+          </span>
+        )}
       </div>
 
       <nav className="flex-1 px-4 py-4 space-y-1">
-        {menuItems.map((item) => {
+        {filteredMenuItems.map((item) => {
           const isActive = pathname === item.href;
           return (
             <Link

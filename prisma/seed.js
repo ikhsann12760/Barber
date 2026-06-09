@@ -13,7 +13,8 @@ async function main() {
     where: { email: adminEmail },
     update: {
       name: 'admin',
-      password: hashedPassword
+      password: hashedPassword,
+      role: 'super_admin',
     },
     create: {
       email: adminEmail,
@@ -27,12 +28,17 @@ async function main() {
   // 2. Create Branch
   const branch = await prisma.branch.upsert({
     where: { id: "cibabat" },
-    update: {},
+    update: {
+      latitude: -6.875033494074873,
+      longitude: 107.5584774541727,
+    },
     create: {
       id: "cibabat",
       name: "Cibabat (Pusat)",
       address: "Jl. Jati Serut No. 52, Cibabat, Kec. Cimahi Utara",
       phone: "08123456789",
+      latitude: -6.875033494074873,
+      longitude: 107.5584774541727,
       openTime: "09:00",
       closeTime: "21:00",
       workingDays: "Mon,Tue,Wed,Thu,Fri,Sat,Sun",

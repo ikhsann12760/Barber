@@ -1,19 +1,43 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 export async function GET() {
   try {
-    const totalBookings = await prisma.booking.count();
-    const activeBarbers = await prisma.barber.count({ where: { status: "active" } });
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const role = (session.user as any).role;
+    const branchId = (session.user as any).branchId;
+
+    const where: any = {};
+    if (role === "admin_cabang" && branchId) {
+      where.branchId = branchId;
+    }
+
+    const totalBookings = await prisma.booking.count({ where });
+    const activeBarbers = await prisma.barber.count({ 
+      where: { 
+        status: "active",
+        ...(role === "admin_cabang" && branchId ? { branchId } : {})
+      } 
+    });
     
     const successfulPayments = await prisma.payment.findMany({
-      where: { status: "success" },
+      where: { 
+        status: "success",
+        booking: where
+      },
       select: { amount: true },
     });
     
     const totalRevenue = successfulPayments.reduce((sum, p) => sum + Number(p.amount), 0);
 
     const recentBookings = await prisma.booking.findMany({
+      where,
       take: 5,
       orderBy: { createdAt: "desc" },
       include: {

@@ -1,8 +1,15 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 export async function GET(req: Request) {
   try {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const { searchParams } = new URL(req.url);
     const barberId = searchParams.get("barberId");
     const date = searchParams.get("date");
@@ -11,10 +18,19 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: "Missing parameters" }, { status: 400 });
     }
 
+    const targetDate = new Date(date);
+    const startOfDay = new Date(targetDate);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(targetDate);
+    endOfDay.setHours(23, 59, 59, 999);
+
     const schedules = await prisma.schedule.findMany({
       where: {
         barberId,
-        date: new Date(date),
+        date: {
+          gte: startOfDay,
+          lte: endOfDay,
+        },
       },
     });
 
@@ -27,29 +43,28 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   try {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const body = await req.json();
     const { barberId, date, startTime, status } = body;
 
-    const schedule = await prisma.schedule.upsert({
-      where: {
-        // Karena kita tidak punya id di sini, kita gunakan findUnique jika ada kombinasi unik
-        // Tapi di schema, bookingId yang unik. Jadi kita cari dulu.
-        id: body.id || "new-id", 
-      },
-      update: { status },
-      create: {
-        barberId,
-        date: new Date(date),
-        startTime,
-        status,
-      },
-    });
+    const targetDate = new Date(date);
+    const startOfDay = new Date(targetDate);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(targetDate);
+    endOfDay.setHours(23, 59, 59, 999);
 
-    // Jika pencarian berdasarkan kriteria lain (untuk toggle manual)
+    // Cari jadwal yang sudah ada untuk barber, tanggal, dan jam tersebut
     const existing = await prisma.schedule.findFirst({
       where: {
         barberId,
-        date: new Date(date),
+        date: {
+          gte: startOfDay,
+          lte: endOfDay,
+        },
         startTime,
       }
     });

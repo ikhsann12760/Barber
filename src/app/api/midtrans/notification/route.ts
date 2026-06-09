@@ -51,6 +51,13 @@ export async function POST(req: Request) {
           paymentStatus: paymentStatus,
           status: bookingStatus,
           updatedAt: new Date(),
+          // Update schedule status through relation
+          schedule: {
+            update: {
+              status: bookingStatus === "confirmed" ? "booked" : bookingStatus === "cancelled" ? "available" : "pending",
+              updatedAt: new Date(),
+            }
+          }
         },
       }),
     ]);

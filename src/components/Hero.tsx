@@ -20,25 +20,25 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-primary font-bold tracking-[0.2em] uppercase mb-4">The Premium Barber & Coffee Experience in Cimahi</h2>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-6 tracking-tighter">
-            Booking Jadwal Potong Rambut di <span className="text-primary">Daddy'scut Barber</span>
+          <h2 className="text-primary font-bold tracking-[0.3em] text-xs uppercase mb-6 opacity-80">Premium Barber & Coffee Experience</h2>
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white mb-8 tracking-tighter leading-tight">
+            Elevate Your <br /> <span className="text-primary">Style & Taste</span>
           </h1>
-          <p className="text-xl md:text-2xl text-white/80 max-w-2xl mx-auto mb-10 font-light">
-            Grooming Maksimal, Kopi Berkualitas. Nikmati Pengalaman Cukur yang Tak Terlupakan dengan Sentuhan Barista.
+          <p className="text-base md:text-xl text-white/60 max-w-xl mx-auto mb-10 md:mb-12 font-medium leading-relaxed">
+            Nikmati layanan grooming terbaik dan kopi pilihan dalam satu tempat yang eksklusif di Cimahi.
           </p>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 w-full max-w-sm mx-auto sm:max-w-none">
             <a
-              href="#booking"
-              className="w-full sm:w-auto flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-black px-8 py-4 rounded-md font-bold text-lg transition-all transform hover:scale-105"
+              href="#booking-v2"
+              className="w-full sm:w-auto flex items-center justify-center gap-3 bg-primary hover:bg-white text-black px-8 md:px-10 py-4 rounded-xl font-black text-xs md:text-sm transition-all shadow-xl shadow-primary/20"
             >
-              <Calendar size={20} />
+              <Calendar size={18} />
               <span>BOOKING SEKARANG</span>
             </a>
             <a
               href="#services"
-              className="w-full sm:w-auto bg-transparent border-2 border-white/30 hover:border-primary hover:text-primary text-white px-8 py-4 rounded-md font-bold text-lg transition-all"
+              className="w-full sm:w-auto bg-white/5 border border-white/10 hover:bg-white/10 text-white px-8 md:px-10 py-4 rounded-xl font-black text-xs md:text-sm transition-all"
             >
               LIHAT LAYANAN
             </a>
