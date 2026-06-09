@@ -113,7 +113,7 @@ export async function saveBookingToDb(data: {
         status: data.status,
         paymentStatus: data.paymentStatus,
         branchName: branch.name,
-        service: { connect: { id: service.id } },
+        service: { connect: { id: service!.id } },
         branch: { connect: { id: branch.id } },
         barber: { connect: { id: barber.id } },
         schedule: {
