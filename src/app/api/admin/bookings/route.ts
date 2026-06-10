@@ -22,6 +22,7 @@ export async function GET() {
 
     const bookings = await prisma.booking.findMany({
       where,
+      take: 100, // Tambahkan limit agar load tidak berat
       include: {
         service: true,
         branch: true,

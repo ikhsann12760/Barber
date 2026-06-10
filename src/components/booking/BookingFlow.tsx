@@ -70,9 +70,20 @@ export default function BookingFlow() {
     }
   }, [bookingData.branchId, branches]);
 
-  const groomingServices = services.filter(s => !s.name.toLowerCase().includes("coffee") && s.price >= 50000);
-  const treatmentServices = services.filter(s => !s.name.toLowerCase().includes("coffee") && s.price < 50000);
-  const coffeeServices = services.filter(s => s.name.toLowerCase().includes("coffee"));
+  const groomingServices = services.filter(s => {
+    const name = s.name.toLowerCase();
+    return !name.includes("coffee") && (s.price >= 50000 || name.includes("cut") || name.includes("shave"));
+  });
+  const treatmentServices = services.filter(s => {
+    const name = s.name.toLowerCase();
+    return !name.includes("coffee") && s.price < 50000 && !name.includes("cut") && !name.includes("shave");
+  });
+  
+  // Perbaikan: Menu Coffee hanya muncul jika cabang adalah PasirKaliki
+  const isPasirKaliki = bookingData.branchName.toLowerCase().includes("pasirkaliki");
+  const coffeeServices = services.filter(s => 
+    s.name.toLowerCase().includes("coffee") && isPasirKaliki
+  );
 
   useEffect(() => {
     const fetchBookedSlots = async () => {

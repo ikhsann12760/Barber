@@ -18,32 +18,33 @@ export async function GET() {
       where.branchId = branchId;
     }
 
-    const totalBookings = await prisma.booking.count({ where });
-    const activeBarbers = await prisma.barber.count({ 
-      where: { 
-        status: "active",
-        ...(role === "admin_cabang" && branchId ? { branchId } : {})
-      } 
-    });
-    
-    const successfulPayments = await prisma.payment.findMany({
-      where: { 
-        status: "success",
-        booking: where
-      },
-      select: { amount: true },
-    });
+    // Jalankan query secara paralel untuk meningkatkan performa
+    const [totalBookings, activeBarbers, successfulPayments, recentBookings] = await Promise.all([
+      prisma.booking.count({ where }),
+      prisma.barber.count({ 
+        where: { 
+          status: "active",
+          ...(role === "admin_cabang" && branchId ? { branchId } : {})
+        } 
+      }),
+      prisma.payment.findMany({
+        where: { 
+          status: "success",
+          booking: where
+        },
+        select: { amount: true },
+      }),
+      prisma.booking.findMany({
+        where,
+        take: 5,
+        orderBy: { createdAt: "desc" },
+        include: {
+          service: true,
+        },
+      })
+    ]);
     
     const totalRevenue = successfulPayments.reduce((sum, p) => sum + Number(p.amount), 0);
-
-    const recentBookings = await prisma.booking.findMany({
-      where,
-      take: 5,
-      orderBy: { createdAt: "desc" },
-      include: {
-        service: true,
-      },
-    });
 
     const stats = [
       { 

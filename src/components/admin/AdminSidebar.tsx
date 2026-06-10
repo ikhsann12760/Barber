@@ -20,6 +20,7 @@ const menuItems = [
   { name: "Bookings", href: "/admin/bookings", icon: CalendarCheck },
   { name: "Branches", href: "/admin/branches", icon: MapPin, roles: ["super_admin"] },
   { name: "Barbers", href: "/admin/barbers", icon: Scissors, roles: ["super_admin"] },
+  { name: "Services", href: "/admin/services", icon: Scissors, roles: ["super_admin"] },
   { name: "Schedules", href: "/admin/schedules", icon: Clock },
   { name: "Users", href: "/admin/users", icon: Users, roles: ["super_admin"] },
   { name: "Settings", href: "/admin/settings", icon: Settings, roles: ["super_admin"] },
