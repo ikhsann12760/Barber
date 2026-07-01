@@ -35,9 +35,9 @@ const Services = () => {
       image: "/img/img5.png"
     },
     {
-      name: "Daddy's Coffe Shops",
+      name: "Coffee & Beverages",
       price: "Got On Menu",
-      desc: "Daddy's Cuts collection of drink menus with signature coffee.",
+      desc: "Collection of drink menus with signature coffee.",
       image: "https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=1937&auto=format&fit=crop"
     }
   ];
@@ -63,7 +63,7 @@ const Services = () => {
               <div className="aspect-[16/10] overflow-hidden">
                 <img 
                   src={service.image} 
-                  alt={`${service.name} - Layanan cukur pria di Daddy'scut Barber`}
+                  alt={`${service.name} - Layanan Mockup Website`}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
               </div>

@@ -14,14 +14,13 @@ const Footer = () => {
               />
               <div className="flex flex-col">
                 <div className="flex items-center tracking-tighter">
-                  <span className="text-white font-black text-lg">DADDY'S</span>
-                  <span className="text-primary font-black text-lg ml-1.5">CUT</span>
+                  <span className="text-white font-black text-lg">MOCKUP</span>
+                  <span className="text-primary font-black text-lg ml-1.5">WEBSITE</span>
                 </div>
-                <span className="text-white/40 text-[8px] font-bold tracking-[0.2em] -mt-0.5">& COFFEE</span>
               </div>
             </Link>
             <p className="text-white/40 text-sm mt-6 max-w-xs leading-relaxed">
-              Premium grooming and coffee experience in Cimahi. Sejak 2019, konsisten memberikan kualitas terbaik untuk penampilan dan cita rasa kopi Anda.
+              Mockup website untuk menampilkan berbagai fitur dan layanan modern. Dibuat dengan desain yang responsif dan profesional.
             </p>
           </div>
 
@@ -35,7 +34,7 @@ const Footer = () => {
 
           <div className="text-center md:text-right">
             <p className="text-white/40 text-xs">
-              © {new Date().getFullYear()} Daddy's Cut Barber. <br className="md:hidden" /> All Rights Reserved.
+              © {new Date().getFullYear()} Mockup Website. <br className="md:hidden" /> All Rights Reserved.
             </p>
           </div>
         </div>

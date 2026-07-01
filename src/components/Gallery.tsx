@@ -7,38 +7,38 @@ const Gallery = () => {
   const items = [
     {
       type: "video",
-      url: "/img/img1.png",
-      videoUrl: "https://scontent-cgk2-2.cdninstagram.com/o1/v/t16/f2/m266/AQNYqd7PB5cEKKPNBOwkfEb-zi_hft070rFGHWwx6r_qJFAMZH0sm4u_PsplwJu-7m4PMz0yoPLj7pIClKDp0UUHO2UJW9jJ1Us.mp4?strext=1&_nc_cat=100&_nc_sid=8bf8fe&_nc_ht=scontent-cgk2-2.cdninstagram.com&_nc_ohc=WipJuV6jJF8Q7kNvwFMg7TH&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuMTA4MC5jb21wcmVzc2VkX3NvdXJjZSIsInhwdl9hc3NldF9pZCI6MTQ5ODM0MTk2MTUyNTU0OCwiYXNzZXRfYWdlX2RheXMiOjI5OSwidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjQzLCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&_nc_gid=gcKC-Xvv6j8GwgZl1BHGqA&_nc_ss=7a22e&_nc_zt=28&oh=00_Af8ZL5iK140G6yH3ic820KSw38wyEdSYfL7AqXCESsQmhg&oe=6A2A0120",
-      title: "Mid Taper Side Part"
+      url: "https://i.ibb.co.com/5hrv4bbj/images.jpg",
+      videoUrl: "https://i.ibb.co.com/5hrv4bbj/images.jpg",
+      title: "Low Fade Haircut"
     },
     {
       type: "video",
-      url: "/img/img2.png",
-      videoUrl: "https://scontent-cgk2-2.cdninstagram.com/o1/v/t16/f2/m266/AQN8HaMd1xDUcUHtdCYPwIsBgNLngdyMxv_E4uasm8Rwckm7dW2NrDWasMZDYhLwZFdHc04lbFsCYEGtBFfd9hjtHDKftg61xs0.mp4?strext=1&_nc_cat=105&_nc_sid=8bf8fe&_nc_ht=scontent-cgk2-2.cdninstagram.com&_nc_ohc=fEPY18lSlNIQ7kNvwHniWv7&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuMTA4MC5jb21wcmVzc2VkX3NvdXJjZSIsInhwdl9hc3NldF9pZCI6NTc2NTQ1MzY4NzU4MjMwLCJhc3NldF9hZ2VfZGF5cyI6Mjk5LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6NDEsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&_nc_gid=O1LxBWiJaBMT7zO_9GYHmg&_nc_ss=7a22e&_nc_zt=28&oh=00_Af87Cl-3t5sNrbrhPOpOo3M92wonxsTjga5K4kjIQeXvEg&oe=6A2A201F",
-      title: "Side Part Haircut"
+      url: "https://i.ibb.co.com/6J724162/images.jpg",
+      videoUrl: "https://i.ibb.co.com/6J724162/images.jpg",
+      title: "Comma Haircut"
     },
     {
       type: "video",
-      url: "/img/img3.png",
-      videoUrl: "https://scontent-cgk1-1.cdninstagram.com/o1/v/t16/f2/m266/AQNmzxECu7Y6r3F45TUrZkqdSxxWmnClczS5WXJQhQ8OZUGBcSkkRXMk7ayKc2cijoBaM7Se4noyRF3pJ2-9H09olcZyXtjy30Q.mp4?strext=1&_nc_cat=109&_nc_sid=8bf8fe&_nc_ht=scontent-cgk1-1.cdninstagram.com&_nc_ohc=QZMhTa4lM-YQ7kNvwENiedO&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuMTA4MC5jb21wcmVzc2VkX3NvdXJjZSIsInhwdl9hc3NldF9pZCI6MTA5MTk3MjI2Mjg0MjAwNCwiYXNzZXRfYWdlX2RheXMiOjMzMiwidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjM2LCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&_nc_gid=LBGH4st11UZh-WVLsAICKQ&_nc_ss=7a22e&_nc_zt=28&oh=00_Af8MGDiv0ciPBp5Uo72jTVdNNFNYWqYTICkO5mZvwaVKtQ&oe=6A2A16F7",
-      title: "Comma HairFade Cut"
+      url: "https://i.ibb.co.com/LdBVsvJ2/images.jpg",
+      videoUrl: "https://i.ibb.co.com/LdBVsvJ2/images.jpg",
+      title: "Tapper HairFade Cut"
     },
     {
       type: "video",
-      url: "/img/image4.png",
-      videoUrl: "https://scontent-cgk2-1.cdninstagram.com/o1/v/t16/f2/m266/AQNnj3_8XbVsTUjHVKeVKCq7Q24GDeOmAk0UWNxIiJu-8jJKQNnmGPFtd7Pw9gnI-U411GkCjkIo3kG_LM87zQ8AqGRhUjPk6K0.mp4?strext=1&_nc_cat=106&_nc_sid=8bf8fe&_nc_ht=scontent-cgk2-1.cdninstagram.com&_nc_ohc=DW7T0ywlJhkQ7kNvwHGRM7V&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuMTA4MC5jb21wcmVzc2VkX3NvdXJjZSIsInhwdl9hc3NldF9pZCI6MTI1NTgwMjM3OTYxMDExNCwiYXNzZXRfYWdlX2RheXMiOjI5NywidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjQ3LCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&_nc_gid=gcKC-Xvv6j8GwgZl1BHGqA&_nc_ss=7a22e&_nc_zt=28&oh=00_Af9yGD7chDQU-wPuzhGQqwlPHmUfj2BCRYcHbrv4iyD4Wg&oe=6A29EFB6",
-      title: "comma haircut"
+      url: "https://i.ibb.co.com/bjPZdJzZ/model-rambut-pria-curtain-haircut.jpg",
+      videoUrl: "https://i.ibb.co.com/bjPZdJzZ/model-rambut-pria-curtain-haircut.jpg",
+      title: "Curtain Haicut"
     },
     {
       type: "video",
-      url: "/img/image5.png",
-      videoUrl: "https://scontent-cgk1-1.cdninstagram.com/o1/v/t16/f2/m266/AQMsXEq7V-aEBuqkciEKQlkWQxRnK_HLiAkfpmm9TiZBQKREE4-ivalhYP7HWcIE1TqWJg80PgeCkYR5AIkU2XQudrWPVm3vMTs.mp4?strext=1&_nc_cat=109&_nc_sid=8bf8fe&_nc_ht=scontent-cgk1-1.cdninstagram.com&_nc_ohc=oudOlq13kXQQ7kNvwE9P2fX&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuMTA4MC5jb21wcmVzc2VkX3NvdXJjZSIsInhwdl9hc3NldF9pZCI6MTE2NzYwNzA5ODgxMTY0NywiYXNzZXRfYWdlX2RheXMiOjE4NSwidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjMxLCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&_nc_gid=OxTmdnQuT1J7t6AuiCIuNw&_nc_ss=7a22e&_nc_zt=28&oh=00_Af8_5lwwgEdZujLHZe4-5M8B_Yrn7Ii-3r3VUWwbU7peLw&oe=6A2A083F",
-      title: "Kids Haircut"
+      url: "https://i.ibb.co.com/Z1J2DK3V/images.jpg",
+      videoUrl: "https://i.ibb.co.com/Z1J2DK3V/images.jpg",
+      title: "Wolf Haircut"
     },
     {
       type: "video",
-      url: "/img/image6.png",
-      videoUrl: "https://scontent-cgk2-2.cdninstagram.com/o1/v/t16/f2/m266/AQMGo4oSohxcSVDyTUT_HiNze2pM7UvZfNuEzo8r0Eb37pcRqmYTPfNqRIkrnYiHZZ1loBFu11GzSjbgu2EH7T_LoK1m5gzMBPQ.mp4?strext=1&_nc_cat=105&_nc_sid=8bf8fe&_nc_ht=scontent-cgk2-2.cdninstagram.com&_nc_ohc=Qu2mUq8O0o4Q7kNvwGfGGuK&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuMTA4MC5jb21wcmVzc2VkX3NvdXJjZSIsInhwdl9hc3NldF9pZCI6MjE2MzkzMTc2NzM2Nzk3MywiYXNzZXRfYWdlX2RheXMiOjMyNSwidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjQ3LCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&_nc_gid=LBGH4st11UZh-WVLsAICKQ&_nc_ss=7a22e&_nc_zt=28&oh=00_Af-ouo9ryCHCibRJsPNtpJMlAFSKZPeWNdwNkWNcboViYg&oe=6A2A17AF",
+      url: "https://i.ibb.co.com/zWG8QvLF/images.jpg",
+      videoUrl: "https://i.ibb.co.com/zWG8QvLF/images.jpg",
       title: "mullet Haircut"
     }
   ];
@@ -85,7 +85,7 @@ const Gallery = () => {
                 <div className="w-full h-full relative">
                   <img 
                     src={item.url} 
-                    alt={`${item.title} - Gaya rambut terbaik dari Daddy'scut Barber`}
+                    alt={`${item.title} - Galeri Mockup Website`}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300" />

@@ -2,17 +2,16 @@ import type { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
-import { AuthProvider } from "@/components/providers/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat" });
 
 export const metadata: Metadata = {
-  title: "Daddy'scut Barber | Barbershop Modern & Booking Online Terbaik",
-  description: "Nikmati pengalaman potong rambut pria terbaik dengan kapster profesional. Jauh-jauh dari antrean, booking jadwal potong rambutmu secara online di Daddy'scut Barber sekarang!",
+  title: "Mockup Website",
+  description: "Website mockup untuk menampilkan berbagai layanan dan fitur modern.",
   icons: {
-    icon: "/img/logo2.png",
-    apple: "/img/logo.png",
+    icon: "https://i.ibb.co.com/gbmZQFN9/barber-pole-icon-vector-sign-260nw-2668166315-removebg-preview.png",
+    apple: "https://i.ibb.co.com/gbmZQFN9/barber-pole-icon-vector-sign-260nw-2668166315-removebg-preview.png",
   },
 };
 
@@ -24,9 +23,7 @@ export default function RootLayout({
   return (
     <html lang="id" className={`${inter.variable} ${montserrat.variable}`} suppressHydrationWarning>
       <body className="font-sans antialiased" suppressHydrationWarning>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        {children}
         <Script
           src="https://app.sandbox.midtrans.com/snap/snap.js"
           data-client-key={process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY}

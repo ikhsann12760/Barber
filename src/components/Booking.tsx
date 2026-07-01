@@ -21,8 +21,8 @@ const Booking = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    const waNumber = "6283816112959"; // Nomor WA Daddy's Cut
-    const text = `Halo Daddy's Cut Barber & Coffee, saya ingin booking layanan:
+    const waNumber = "6283816112959"; // Nomor WA Mockup Website
+    const text = `Halo Mockup Website, saya ingin booking layanan:
     
 Cabang: ${formData.branch}
 Nama: ${formData.name}

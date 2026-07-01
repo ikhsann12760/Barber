@@ -20,7 +20,7 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-primary font-bold tracking-[0.3em] text-xs uppercase mb-6 opacity-80">Premium Barber & Coffee Experience</h2>
+          <h2 className="text-primary font-bold tracking-[0.3em] text-xs uppercase mb-6 opacity-80">Mockup Website</h2>
           <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white mb-8 tracking-tighter leading-tight">
             Elevate Your <br /> <span className="text-primary">Style & Taste</span>
           </h1>

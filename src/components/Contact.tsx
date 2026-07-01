@@ -75,7 +75,7 @@ const Contact = () => {
                 <div>
                   <h4 className="text-white text-xl font-bold mb-2">Lokasi</h4>
                   <p className="text-white/60 text-sm leading-relaxed max-w-md">
-                    Jl. Jati Serut No. 52, Cibabat, Kec. Cimahi Utara, Kota Cimahi, Jawa Barat 40513 Jl. Gn. Batu No.183, Pasirkaliki, Kec. Cimahi Utara, Kota Cimahi, Jawa Barat 40514 Jl. Jend. H. Amir Machmud No.281, Cigugur Tengah, Kota Cimahi, Jawa Barat 40522 Jl. Kolonel Masturi No.51, Cimahi, Kec. Cimahi Tengah, Kota Cimahi, Jawa Barat 40525
+                    [Alamat akan diisi]
                   </p>
                 </div>
               </div>
@@ -96,7 +96,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h4 className="text-white text-xl font-bold mb-1">Email</h4>
-                  <p className="text-white/60 text-sm">hello@daddyscut.com</p>
+                  <p className="text-white/60 text-sm">hello@mockupwebsite.com</p>
                 </div>
               </div>
             </div>
@@ -127,7 +127,7 @@ const Contact = () => {
             className="h-[400px] md:h-[500px] rounded-[2rem] overflow-hidden border border-white/10"
           >
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.121332768434!2d107.5584774541727!3d-6.875033494074873!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwNTInMzAuMSJTIDEwN8KwMzMnMzAuNSJF!5e0!3m2!1sid!2sid!4v1717400000000!5m2!1sid!2sid"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d0!2d0!3d0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z!5e0!3m2!1sid!2sid!4v0!5m2!1sid!2sid"
               width="100%"
               height="100%"
               style={{ border: 0 }}

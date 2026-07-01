@@ -7,7 +7,7 @@ const About = () => {
   const features = [
     {
       icon: <Scissors className="text-primary" size={32} />,
-      title: "Barber Profesional",
+      title: "Layanan Profesional",
       desc: "Tim ahli dengan pengalaman bertahun-tahun dalam berbagai gaya rambut."
     },
     {
@@ -39,10 +39,10 @@ const About = () => {
           >
             <h2 className="text-primary font-bold text-xs md:text-sm uppercase tracking-[0.3em] mb-3 md:mb-4">Tentang Kami</h2>
             <h3 className="text-3xl md:text-5xl font-black text-white mb-6 leading-tight">
-              Lebih Dari Sekadar <br /> <span className="text-primary">Barbershop</span>
+              Lebih Dari Sekadar <br /> <span className="text-primary">Mockup Website</span>
             </h3>
             <p className="text-white/70 text-base md:text-lg mb-8 leading-relaxed">
-              Daddy's Cut Barber & Coffee hadir di Cimahi untuk memberikan pengalaman grooming yang berbeda. Kami percaya bahwa setiap pria berhak mendapatkan perawatan terbaik sambil menikmati secangkir kopi berkualitas dalam suasana yang santai dan maskulin.
+              Mockup Website hadir untuk memberikan pengalaman digital terbaik. Kami percaya bahwa setiap pengunjung berhak mendapatkan tampilan website yang modern, responsif, dan informatif dalam suasana yang profesional dan menarik.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
               {features.map((f, i) => (
@@ -65,7 +65,7 @@ const About = () => {
             <div className="aspect-[4/5] md:aspect-[4/5] rounded-2xl overflow-hidden border-2 border-primary/20 shadow-2xl">
               <img 
                 src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=2074&auto=format&fit=crop" 
-                alt="Suasana interior barbershop modern Daddy'scut Barber & Coffee"
+                alt="Suasana interior Mockup Website yang modern dan profesional"
                 className="w-full h-full object-cover"
               />
             </div>

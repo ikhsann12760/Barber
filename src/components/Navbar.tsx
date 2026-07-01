@@ -37,17 +37,16 @@ const Navbar = () => {
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative">
               <img 
-                src="/img/logo.png" 
+                src="https://i.ibb.co.com/mC3hSwB1/image1.webp" 
                 alt="Logo" 
                 className="w-10 h-10 md:w-12 md:h-12 object-cover rounded-full border border-primary/20 group-hover:border-primary transition-colors"
               />
             </div>
             <div className="flex flex-col">
               <div className="flex items-center tracking-tighter">
-                <span className="text-white font-black text-lg md:text-xl">DADDY'S</span>
-                <span className="text-primary font-black text-lg md:text-xl ml-1.5">CUT</span>
+                <span className="text-white font-black text-lg md:text-xl">MOCKUP</span>
+                <span className="text-primary font-black text-lg md:text-xl ml-1.5">WEBSITE</span>
               </div>
-              <span className="text-white/40 text-[10px] font-bold tracking-[0.2em] -mt-1">& COFFEE</span>
             </div>
           </Link>
 

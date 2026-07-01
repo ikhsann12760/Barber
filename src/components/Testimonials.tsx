@@ -7,7 +7,7 @@ const Testimonials = () => {
   const reviews = [
     {
       name: "Budi Santoso",
-      text: "Barbershop terbaik di Cimahi! Rizky bener-bener ahli dalam urusan fade. Tempatnya nyaman dan pelayanannya premium banget.",
+      text: "Website terbaik! Desainnya modern dan responsif. Fitur booking online sangat membantu.",
       role: "Pelanggan Tetap",
       stars: 5
     },
