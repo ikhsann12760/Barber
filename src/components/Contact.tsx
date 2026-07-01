@@ -86,7 +86,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h4 className="text-white text-xl font-bold mb-1">Telepon / WA</h4>
-                  <p className="text-white/60 text-sm">+62 812-3456-7890</p>
+                  <p className="text-white/60 text-sm">[Nomor Telepon]</p>
                 </div>
               </div>
 
